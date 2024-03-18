@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= it.title %></title>
+</head>
+<body>
+  <h1><%= it.title %></h1>
+  <nav>
+    <ul>
+      <li><a href="/">Index</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact us</a></li>
+    </ul>
+  </nav>
+  <div>
+  <p>How would you rate this experience?</p>
+<form method="POST" action="/feedbacks/1">
+  <button type="submit" name="value">Poor</button>
+</form>
+<form method="POST" action="/feedbacks/2">
+  <button type="submit" name="value">Fair</button>
+</form>
+<form method="POST" action="/feedbacks/3">
+  <button type="submit" name="value">Good</button>
+</form>
+<form method="POST" action="/feedbacks/4">
+  <button type="submit" name="value">Very Good</button>
+</form>
+<form method="POST" action="/feedbacks/5">
+  <button type="submit" name="value">Excellent</button>
+</form>
+  </div>
+</body>

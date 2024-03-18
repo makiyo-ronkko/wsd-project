@@ -4,10 +4,8 @@ const getFeedback = async (c) => {
   return feedback.value ?? c ?? 0;
 };
 
-const incrementFeedback = async (c) => {
-  let count = await getFeedback(c);
-  count++;
-  await setFeedback(count);
+const submitFeedback = async (c) => {
+  await setFeedback(c);
 };
 
 const setFeedback = async (feedback) => {
@@ -20,4 +18,4 @@ const resetFeedbacks = async () => {
   await kv.set(['feedback'], 0);
 };
 
-export { getFeedback, incrementFeedback, resetFeedbacks };
+export { getFeedback, submitFeedback, resetFeedbacks };
