@@ -22,7 +22,8 @@ const submitFeedback = async (c) => {
 };
 
 const resetFeedbacks = async (c) => {
-  await feedbackService.resetFeedbacks();
+  const value = c.req.param('value');
+  await feedbackService.resetFeedbacks(value);
   return c.text('Feedbacks reset to zero.');
 };
 
