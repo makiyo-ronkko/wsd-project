@@ -17,7 +17,7 @@
   <button type="submit" name="value">Good</button>
 </form>
 <form method="POST" action="/feedbacks/4">
-  <button type="submit" name="value">Very Good</button>
+  <button type="submit" name="value">Very good</button>
 </form>
 <form method="POST" action="/feedbacks/5">
   <button type="submit" name="value">Excellent</button>
