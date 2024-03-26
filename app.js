@@ -2,11 +2,11 @@ import { Hono } from 'https://deno.land/x/hono@v3.7.4/mod.ts';
 import { Eta } from 'https://deno.land/x/eta@v3.1.0/src/index.ts';
 import * as courseController from './courseController.js';
 // import * as countController from './countController.js';
-// import * as feedbackController from './feedbackController.js';
+import * as feedbackController from './feedbackController.js';
 
 const app = new Hono();
 
-app.get('/', courseController.showForm);
+app.get('/', feedbackController.showFeedbackForm);
 app.get('/courses', courseController.showForm);
 app.get('/courses/:id', courseController.showCourse);
 app.post('/courses', courseController.createCourse);
@@ -15,10 +15,9 @@ app.post('/courses/:id/delete', courseController.deleteCourse);
 
 export default app;
 
-// app.get('/', feedbackController.showFeedbackForm);
-// app.get('/feedbacks/:value', feedbackController.getFeedback);
-// app.post('/feedbacks/:value', feedbackController.submitFeedback);
-// app.post('/reset-feedbacks', feedbackController.resetFeedbacks);
+app.get('/feedbacks/:value', feedbackController.getFeedback);
+app.post('/feedbacks/:value', feedbackController.submitFeedback);
+app.post('/reset-feedbacks', feedbackController.resetFeedbacks);
 
 // app.get('/', (c) => c.html(eta.render('index.eta', { title: 'Feedbacks' })));
 // app.get('/about', (c) => c.html(eta.render('index.eta', { title: 'About' })));
