@@ -10,21 +10,24 @@ const showFeedbackForm = async (c) => {
 
 const getFeedback = async (c) => {
   const count = c.req.param('value');
+  const id = c.req.param('id');
   return c.text(
-    `Feedback ${await count}: ${await feedbackService.getFeedback(count)}`
+    `Feedback ${await count}: ${await feedbackService.getFeedback(count, id)}`
   );
 };
 
 const submitFeedback = async (c) => {
   const count = c.req.param('value');
-  await feedbackService.submitFeedback(count);
-  return c.redirect('/');
+  const id = c.req.param('id');
+  await feedbackService.submitFeedback(count, id);
+  return c.redirect(`/courses/${id}`);
 };
 
 const resetFeedbacks = async (c) => {
   const value = c.req.param('value');
-  await feedbackService.resetFeedbacks(value);
-  return c.text('Feedbacks reset to zero.');
+  const id = c.req.param('id');
+  await feedbackService.resetFeedbacks(value, id);
+  return c.redirect(`/courses/${id}`);
 };
 
 export { getFeedback, submitFeedback, resetFeedbacks, showFeedbackForm };

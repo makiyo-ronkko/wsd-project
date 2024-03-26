@@ -1,23 +1,23 @@
-const getFeedback = async (value) => {
+const getFeedback = async (value, id) => {
   const kv = await Deno.openKv();
-  const feedback = await kv.get([`feedback_${value}`]);
+  const feedback = await kv.get([`feedback_${id}_${value}`]);
   return feedback.value ?? 0;
 };
 
-const submitFeedback = async (value) => {
-  let count = await getFeedback(value);
+const submitFeedback = async (value, id) => {
+  let count = await getFeedback(value, id);
   count++;
-  await setFeedback(count, value);
+  await setFeedback(count, value, id);
 };
 
-const setFeedback = async (count, value) => {
+const setFeedback = async (count, value, id) => {
   const kv = await Deno.openKv();
-  await kv.set([`feedback_${value}`], count);
+  await kv.set([`feedback_${id}_${value}`], count);
 };
 
-const resetFeedbacks = async () => {
+const resetFeedbacks = async (value, id) => {
   const kv = await Deno.openKv();
-  await kv.set([`feedback_${value}`], 0);
+  await kv.set([`feedback_${id}_${value}`], 0);
 };
 
 export { getFeedback, submitFeedback, resetFeedbacks };
