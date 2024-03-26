@@ -5,7 +5,7 @@ const eta = new Eta({ views: `${Deno.cwd()}/templates/` });
 
 const showForm = async (c) => {
   return c.html(
-    eta.render('index.eta', {
+    eta.render('courses.eta', {
       courses: await courseService.listCourses(),
       title: 'Courses',
     })
