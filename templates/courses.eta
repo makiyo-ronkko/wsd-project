@@ -5,11 +5,12 @@
 </head>
 <body>
   <h1><%= it.title %></h1>
+  <%~ include("/partials/validation-errors.eta", { field: "Course name", errors: it?.errors?.name?._errors }) %>
 <div>
   <p>Add a course:</p>
     <form method="POST" action="/courses">
       <label for="name">Course name:</label>
-      <input type="text" id="name" name="name" /><br/>
+      <input type="text" id="name" name="name" value="<%= it?.name ?? '' %>"/><br/>
       <input type="submit" value="Add" />
     </form>
     <p>Existing courses:</p>
