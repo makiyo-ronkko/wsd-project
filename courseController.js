@@ -1,6 +1,11 @@
 import { Eta } from 'https://deno.land/x/eta@v3.1.0/src/index.ts';
 import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
+import {
+  getSignedCookie,
+  setSignedCookie,
+} from 'https://deno.land/x/hono@v3.7.4/helper.ts';
 import * as courseService from './courseService.js';
+import { secret, sessionFeedback } from './feedbackController.js';
 
 const eta = new Eta({ views: `${Deno.cwd()}/templates/` });
 
@@ -25,8 +30,22 @@ const showForm = async (c) => {
 
 const showCourse = async (c) => {
   const id = c.req.param('id');
+
+  const sessionId =
+    (await getSignedCookie(c, secret, 'sessionId')) ?? crypto.randomUUID();
+  await setSignedCookie(c, 'sessionId', sessionId, secret, {
+    path: '/',
+  });
+  const hasSessionFeedback = sessionFeedback.has(sessionId + id);
+
   return c.html(
-    eta.render('course.eta', { course: await courseService.getCourse(id) })
+    eta.render('course.eta', {
+      sessionFeedback: sessionFeedback.has(sessionId + id),
+      course: await courseService.getCourse(id),
+      text: hasSessionFeedback
+        ? 'You have already given feedback for this course. Thank you!'
+        : '',
+    })
   );
 };
 
@@ -39,6 +58,7 @@ const createCourse = async (c) => {
         ...body,
         courses: await courseService.listCourses(),
         errors: validationResult.error.format(),
+        title: 'Courses',
       })
     );
   }
